@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <th:block th:insert="fragments :: head" />
+</head>
+<body>
+    <th:block th:insert="fragments :: header" />
+    <main role="main">
+        <section class="jumbotron text-center">
+            <div class="container">
+                <h1 class="jumbotron-heading">Monitor</h1>
+                <ul>
+                    <li th:each="filename : ${files}">
+                        <a th:href="@{/monitor/{filename}(filename=${filename})}" th:text="${filename}">filename</a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </main>
+    <th:block th:insert="fragments :: footer" />
+</body>
+</html>

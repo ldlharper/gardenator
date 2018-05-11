@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <th:block th:insert="fragments :: head" />
+</head>
+<body>
+    <th:block th:insert="fragments :: header" />
+
+    <main role="main">
+        <section class="jumbotron text-center">
+            <div class="container">
+                <h1 class="jumbotron-heading">Schedules</h1>
+            </div>
+        </section>
+        <form th:object="${scheduleJson}" action="/schedule" method="POST">
+            <div class="album py-5 bg-light">
+                <div class="container">
+                    <div class="card row box-shadow">
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label for="startDay">Start day</label>
+                                <div class="col-sm-10">
+                                    <input id="startDay" class="form-control" th:field="*{startDay}" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="startMonth">Start month</label>
+                                <div class="col-sm-10">
+                                    <input id="startMonth" class="form-control" th:field="*{startMonth}" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="endDay">End day</label>
+                                <div class="col-sm-10">
+                                    <input id="endDay" class="form-control" th:field="*{endDay}" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="endMonth">End month</label>
+                                <div class="col-sm-10">
+                                    <input id="endMonth" class="form-control" th:field="*{endMonth}" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="sunday">Sunday</label>
+                                <div class="col-sm-10">
+                                    <input type="checkbox" class="form-control" id="sunday" th:field="*{sunday}" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="monday">Monday</label>
+                                <div class="col-sm-10">
+                                    <input type="checkbox" class="form-control" id="monday" th:field="*{monday}" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="tuesday">Tuesday</label>
+                                <div class="col-sm-10">
+                                    <input type="checkbox" class="form-control" id="tuesday" th:field="*{tuesday}" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="wednesday">Wednesday</label>
+                                <div class="col-sm-10">
+                                    <input type="checkbox" class="form-control" id="wednesday" th:field="*{wednesday}" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="thursday">Thursday</label>
+                                <div class="col-sm-10">
+                                    <input type="checkbox" class="form-control" id="thursday" th:field="*{thursday}" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="friday">Friday</label>
+                                <div class="col-sm-10">
+                                    <input type="checkbox" class="form-control" id="friday" th:field="*{friday}" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="saturday">Saturday</label>
+                                <div class="col-sm-10">
+                                    <input type="checkbox" class="form-control" id="saturday" th:field="*{saturday}" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="album py-5 bg-light">
+                <div class="container">
+                    <th:block th:each="sessionJson, sessionStat : ${scheduleJson.sessions}">
+                        <div class="card row box-shadow">
+                            <div class="card-body">
+                                <div class="form-group row">
+                                    <label for="name">Session name</label>
+                                    <div class="col-sm-10">
+                                        <input id="name" class="form-control" th:field="*{sessions[__${sessionStat.index}__].name}" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="startMin">Start minutes</label>
+                                    <div class="col-sm-10">
+                                        <input id="startMin" class="form-control" th:field="*{sessions[__${sessionStat.index}__].startMin}" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="zone1Min">Zone 1 minutes</label>
+                                    <div class="col-sm-10">
+                                        <input id="zone1Min" class="form-control" th:field="*{sessions[__${sessionStat.index}__].zone1Min}" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="zone2Min">Zone 2 minutes</label>
+                                    <div class="col-sm-10">
+                                        <input id="zone2Min" class="form-control" th:field="*{sessions[__${sessionStat.index}__].zone2Min}" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="zone3Min">Zone 3 minutes</label>
+                                    <div class="col-sm-10">
+                                        <input id="zone3Min" class="form-control" th:field="*{sessions[__${sessionStat.index}__].zone3Min}" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="zone4Min">Zone 4 minutes</label>
+                                    <div class="col-sm-10">
+                                        <input id="zone4Min" class="form-control" th:field="*{sessions[__${sessionStat.index}__].zone4Min}" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="zone5Min">Zone 5 minutes</label>
+                                    <div class="col-sm-10">
+                                        <input id="zone5Min" class="form-control" th:field="*{sessions[__${sessionStat.index}__].zone5Min}" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="zone6Min">Zone 6 minutes</label>
+                                    <div class="col-sm-10">
+                                        <input id="zone6Min" class="form-control" th:field="*{sessions[__${sessionStat.index}__].zone6Min}" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="zone7Min">Zone 7 minutes</label>
+                                    <div class="col-sm-10">
+                                        <input id="zone7Min" class="form-control" th:field="*{sessions[__${sessionStat.index}__].zone7Min}" />
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-success" name="deleteSession">- Remove session</button>
+                            </div>
+                        </div>
+                    </th:block>
+                </div>
+            <button type="submit" class="btn btn-success" name="addSession">+ Add session</button>
+
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </main>
+    <th:block th:insert="fragments :: footer" />
+</body>
+</html>

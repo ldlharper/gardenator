@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <th:block th:insert="fragments :: head" />
+</head>
+<body>
+    <th:block th:insert="fragments :: header" />
+    <main role="main">
+        <section class="jumbotron text-center">
+            <div class="container">
+                <h1 class="jumbotron-heading" th:text="${filename}">Filename</h1>
+            </div>
+        </section>
+        <p th:utext="${contents}" />
+    </main>
+    <th:block th:insert="fragments :: footer" />
+</body>
+</html>

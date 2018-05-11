@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <th:block th:insert="fragments :: head" />
+</head>
+<body>
+    <th:block th:insert="fragments :: header" />
+
+    <main role="main">
+        <section class="jumbotron text-center">
+            <div class="container">
+                <h1 class="jumbotron-heading">Zones</h1>
+            </div>
+        </section>
+        <form th:object="${zonesJson}" action="/zone" method="POST">
+            <div class="album py-5 bg-light">
+                <div class="container">
+                    <th:block th:each="zone, stat : ${zonesJson.zones}">
+                        <div class="card row box-shadow">
+                            <div class="card-body">
+                                <div class="form-group row">
+                                    <label for="name">Zone name</label>
+                                    <div class="col-sm-10">
+                                        <input id="name" class="form-control" th:field="*{zones[__${stat.index}__].name}" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="tempMon">Temperature monitor</label>
+                                    <div class="col-sm-10">
+                                        <input type="checkbox" class="form-control" id="tempMon" th:field="*{zones[__${stat.index}__].tempMon}" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="deviceName">Device name</label>
+                                    <div class="col-sm-10">
+                                        <input id="deviceName" class="form-control" th:field="*{zones[__${stat.index}__].deviceName}" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="moistureMon">Moisture monitor</label>
+                                    <div class="col-sm-10">
+                                        <input type="checkbox" class="form-control" id="moistureMon" th:field="*{zones[__${stat.index}__].moistureMon}" />
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-danger" name="deleteZone" th:value="${stat.index}">- Delete zone</button>
+                            </div>
+                        </div>
+                    </th:block>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success" name="addZone">+ Add zone</button>
+
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </main>
+    <th:block th:insert="fragments :: footer" />
+</body>
+</html>

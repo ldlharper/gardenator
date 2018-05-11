@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <th:block th:insert="fragments :: head" />
+</head>
+<body>
+    <th:block th:insert="fragments :: header" />
+    <main role="main">
+        <section class="jumbotron text-center">
+            <div class="container">
+                <h1 class="jumbotron-heading" th:text="${filename}">Filename</h1>
+            </div>
+        </section>
+        <div id="chartContainer"></div>
+    </main>
+    <th:block th:insert="fragments :: footer" />
+    <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+    <script th:inline="javascript">
+    /*<![CDATA[*/
+        window.onload = function () {
+            var data = /*[[${data}]]*/ '[]';
+            var minimum = /*[[${minimum}]]*/ 20;
+            var options = {
+                animationEnabled: true,
+                theme: "light2",
+                title:{
+                    text: "Temperature Monitor"
+                },
+                axisX:{
+                    valueFormatString: "HH:mm"
+                },
+                axisY: {
+                    title: "Temperature",
+                    minimum: minimum
+                },
+                toolTip:{
+                    shared:true
+                },
+                legend:{
+                    cursor:"pointer",
+                    verticalAlign: "bottom",
+                    horizontalAlign: "left",
+                    dockInsidePlotArea: true,
+                    itemclick: toogleDataSeries
+                },
+                data: [{
+                    type: "line",
+                    showInLegend: true,
+                    name: "Temperature",
+                    markerType: "square",
+                    xValueFormatString: "HH:mm",
+                    color: "#F08080",
+                    yValueFormatString: "#,##0K",
+                    dataPoints: $.map(data, function(point) { return {x:new Date(point.date), y:point.temp}; })
+                }]
+            };
+            $("#chartContainer").CanvasJSChart(options);
+
+            function toogleDataSeries(e){
+                if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                    e.dataSeries.visible = false;
+                } else{
+                    e.dataSeries.visible = true;
+                }
+                e.chart.render();
+            }
+
+        }
+    /*]]>*/
+    </script>
+</body>
+</html>

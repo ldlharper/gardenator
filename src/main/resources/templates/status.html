@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <th:block th:insert="fragments :: head" />
+</head>
+<body>
+    <th:block th:insert="fragments :: header" />
+
+    <main role="main">
+        <section class="jumbotron text-center">
+            <div class="container">
+                <h1 class="jumbotron-heading">Status</h1>
+                <h3 th:text="${#temporals.format(statusJson.time, 'd MMMM yyyy HH:mm')}"></h3>
+                <h3 th:text="${'Pump Status: ' + statusJson.pumpStatus}"></h3>
+            </div>
+        </section>
+        <div class="album py-5 bg-light">
+            <div class="container">
+                    <th:block th:each="zoneStatus : ${statusJson.zoneStatus}">
+                        <div class="card row box-shadow">
+                            <div class="card-body">
+                                <h1 th:text="${zoneStatus.name}"></h1>
+
+                                <dl class="row">
+                                    <dt class="col-sm-3">Valve status</dt>
+                                    <dd class="col-sm-9" th:text="${zoneStatus.valveStatus}"></dd>
+
+                                    <dt class="col-sm-3">Temperature monitoring</dt>
+                                    <dd class="col-sm-9" th:text="${zoneStatus.tempMon}"></dd>
+
+                                    <dt class="col-sm-3">Temperature</dt>
+                                    <dd class="col-sm-9" th:text="${zoneStatus.temp}"></dd>
+
+                                    <dt class="col-sm-3">Moisture monitoring</dt>
+                                    <dd class="col-sm-9" th:text="${zoneStatus.moistureMon}"></dd>
+
+                                    <dt class="col-sm-3">Moisture</dt>
+                                    <dd class="col-sm-9" th:text="${zoneStatus.moisture}"></dd>
+
+                                    <dt class="col-sm-3">Last water start</dt>
+                                    <dd class="col-sm-9" th:text="${#temporals.format(zoneStatus.lastWaterStart, 'd MMMM yyyy HH:mm:ss')}"></dd>
+
+                                    <dt class="col-sm-3">Last water end</dt>
+                                    <dd class="col-sm-9" th:text="${#temporals.format(zoneStatus.lastWaterEnd, 'd MMMM yyyy HH:mm:ss')}"></dd>
+                            </div>
+                        </div>
+                    </th:block>
+                </div>
+            </div>
+        </div>
+    </main>
+    <th:block th:insert="fragments :: footer" />
+</body>
+</html>
