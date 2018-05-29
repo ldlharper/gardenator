@@ -21,11 +21,17 @@ public class ZoneStatusJson {
     @JsonProperty("Moisture")
     private String moisture;
     @JsonProperty("Last Water Start")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd HH:mm")
     private LocalDateTime lastWaterStart;
     @JsonProperty("Last Water End")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd HH:mm")
     private LocalDateTime lastWaterEnd;
+    @JsonProperty("Last Temp Read")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd HH:mm")
+    private LocalDateTime lastTempRead;
+    @JsonProperty("Last Moisture Read")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd HH:mm")
+    private LocalDateTime lastMoistRead;
 
     public String getName() {
         return name;
@@ -90,4 +96,16 @@ public class ZoneStatusJson {
     public void setLastWaterEnd(LocalDateTime lastWaterEnd) {
         this.lastWaterEnd = lastWaterEnd;
     }
+
+    public LocalDateTime getLastTempRead() {
+        return lastTempRead;
+    }
+
+    public void setLastTempRead(LocalDateTime lastTempRead) {
+        this.lastTempRead = lastTempRead;
+    }
+
+    public LocalDateTime getLastMoistRead() { return lastMoistRead; }
+
+    public void setLastMoistRead(LocalDateTime lastMoistRead) { this.lastMoistRead = lastMoistRead; }
 }
