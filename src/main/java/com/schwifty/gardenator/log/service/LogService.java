@@ -16,6 +16,8 @@ import static org.apache.commons.io.FileUtils.readFileToString;
 @Service
 public class LogService {
 
+    public static final String DEFAULT_LOG_FILE = "watctld.log";
+
     @Value("${files.log.directory}")
     private String logDirectory;
 

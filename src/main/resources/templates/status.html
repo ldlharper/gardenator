@@ -10,45 +10,74 @@
         <section class="jumbotron text-center">
             <div class="container">
                 <h1 class="jumbotron-heading">Status</h1>
-                <h3 th:text="${#temporals.format(statusJson.time, 'd MMMM yyyy HH:mm')}"></h3>
-                <h3 th:text="${'Pump Status: ' + statusJson.pumpStatus}"></h3>
+                <h5 th:text="${#temporals.format(statusJson.time, 'd MMMM yyyy HH:mm')}"></h5>
+                <h5 th:text="${'Pump Status: ' + statusJson.pumpStatus}"></h5>
+                <input type="checkbox" onclick="toggleAutoRefresh(this);" id="reloadCB"> Auto Refresh
             </div>
         </section>
-        <div class="album py-5 bg-light">
-            <div class="container">
-                    <th:block th:each="zoneStatus : ${statusJson.zoneStatus}">
-                        <div class="card row box-shadow">
-                            <div class="card-body">
-                                <h1 th:text="${zoneStatus.name}"></h1>
 
-                                <dl class="row">
-                                    <dt class="col-sm-3">Valve status</dt>
-                                    <dd class="col-sm-9" th:text="${zoneStatus.valveStatus}"></dd>
-
-                                    <dt class="col-sm-3">Temperature monitoring</dt>
-                                    <dd class="col-sm-9" th:text="${zoneStatus.tempMon}"></dd>
-
-                                    <dt class="col-sm-3">Temperature</dt>
-                                    <dd class="col-sm-9" th:text="${zoneStatus.temp}"></dd>
-
-                                    <dt class="col-sm-3">Moisture monitoring</dt>
-                                    <dd class="col-sm-9" th:text="${zoneStatus.moistureMon}"></dd>
-
-                                    <dt class="col-sm-3">Moisture</dt>
-                                    <dd class="col-sm-9" th:text="${zoneStatus.moisture}"></dd>
-
-                                    <dt class="col-sm-3">Last water start</dt>
-                                    <dd class="col-sm-9" th:text="${#temporals.format(zoneStatus.lastWaterStart, 'd MMMM yyyy HH:mm:ss')}"></dd>
-
-                                    <dt class="col-sm-3">Last water end</dt>
-                                    <dd class="col-sm-9" th:text="${#temporals.format(zoneStatus.lastWaterEnd, 'd MMMM yyyy HH:mm:ss')}"></dd>
-                            </div>
-                        </div>
-                    </th:block>
-                </div>
-            </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Zone</th>
+                    <th scope="col">Last water on</th>
+                    <th scope="col">Last water off</th>
+                    <th scope="col">Temp</th>
+                    <th scope="col">Temp read</th>
+                    <th scope="col">Moisture read</th>
+                    <th scope="col">Moisture</th>
+                    <th scope="col">Moisture monitoring</th>
+                    <th scope="col">Temp monitoring</th>
+                    <th scope="col">Valve status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="zoneStatus : ${statusJson.zoneStatus}">
+                    <td th:text="${zoneStatus.name}"></td>
+                    <td th:text="${#temporals.format(zoneStatus.lastWaterStart, 'd MMMM yyyy HH:mm:ss')}"></td>
+                    <td th:text="${#temporals.format(zoneStatus.lastWaterEnd, 'd MMMM yyyy HH:mm:ss')}"></td>
+                    <td th:text="${zoneStatus.temp}"></td>
+                    <td th:text="${#temporals.format(zoneStatus.lastTempRead, 'd MMMM yyyy HH:mm:ss')}"></td>
+                    <td th:text="${#temporals.format(zoneStatus.lastMoistRead, 'd MMMM yyyy HH:mm:ss')}"></td>
+                    <td th:text="${zoneStatus.moisture}"></td>
+                    <td th:text="${zoneStatus.moistureMon}"></td>
+                    <td th:text="${zoneStatus.tempMon}"></td>
+                    <td th:text="${zoneStatus.valveStatus}"></td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 th:text="${filename}"></h3>
+        <p style="height: 15em; overflow: scroll" th:utext="${contents}" />
+        <a style="margin-left:20px;" class="btn btn-primary row" href="/logs">Logs</a>
+        <a style="margin-left:20px;" class="btn btn-primary row" href="/zones">Zones</a>
+        <a style="margin-left:20px;" class="btn btn-primary row" href="/monitor">Monitor</a>
         </div>
     </main>
+    <script>
+        (function() {
+            var reloading;
+
+            function checkReloading() {
+                if (window.location.hash=="#autoreload") {
+                    reloading=setTimeout("window.location.reload();", 5000);
+                    document.getElementById("reloadCB").checked=true;
+                }
+            }
+
+            window.toggleAutoRefresh = function(cb) {
+                if (cb.checked) {
+                    window.location.replace("#autoreload");
+                    reloading=setTimeout("window.location.reload();", 5000);
+                } else {
+                    window.location.replace("#");
+                    clearTimeout(reloading);
+                }
+            }
+
+            window.onload=checkReloading;
+        }());
+    </script>
+
     <th:block th:insert="fragments :: footer" />
 </body>
 </html>
